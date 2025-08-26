@@ -2,28 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-    <form action="/add" method="POST">
-        <input type="text" name="title" required placeholder="Add new task...">
-        <button type="submit">Add</button>
-    </form>
 
-    <ul>
-        <% todos.forEach(todo=> { %>
-            <li>
-                <%= todo.title %>
-                    <form action="/delete/<%= todo.id %>" method="POST" style="display:inline;">
-                        <button type="submit">delete</button>
-                    </form>
-                    <a href="/edit/<%= todo.id %>">edit</a>
-            </li>
-            <% }); %>
-    </ul>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div id="newtask">
+                <form action="/add" method="post">
+                    <input type="text" name="title" required placeholder="Add new task...">
+                    <button type="submit" id="addBtn">Add</button>
+                </form>
+            </div>
+            <div id="tasks">
+                <% todos.forEach(todo=> { %>
+                    <div class="task">
+                        <span class="taskName">
+                            <%= todo.title %>
+                        </span>
+                        <div>
+                            <form action="/delete/<%= todo.id %>" method="post" style="display:inline;">
+                                <button class="delete" type="submit">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                            <a href="/edit/<%= todo.id %>">
+                                <button class="edit" type="button">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

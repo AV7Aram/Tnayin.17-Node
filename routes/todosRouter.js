@@ -1,46 +1,43 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const { readData } = require('../middleware/readData');
+const { writeFile } = require('../helpers/writeFile');
 
 const todosRouter = express.Router();
 
-const dataPath = path.join(__dirname, '../db/tasks.json');
-
-todosRouter.get('/', (req, res) => {
-    const todos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+todosRouter.get('/', readData, (req, res) => {
+    const { todos } = res.locals;
     res.render('todos/index', { todos });
 });
 
-
-todosRouter.post('/add', (req, res) => {
-    const todos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+todosRouter.post('/add', readData, async (req, res) => {
+    const { todos } = res.locals;
     const newTodo = {
         id: Date.now(),
         title: req.body.title
     };
     todos.push(newTodo);
-    fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2));
+    await writeFile('db', 'tasks.json', todos); 
     res.redirect('/');
 });
 
 
-todosRouter.post('/delete/:id', (req, res) => {
-    let todos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+todosRouter.post('/delete/:id', readData, async (req, res) => {
+    let { todos } = res.locals;
     const id = parseInt(req.params.id);
     todos = todos.filter(todo => todo.id !== id);
-    fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2));
+    await writeFile('db', 'tasks.json', todos);
     res.redirect('/');
 });
 
 
-todosRouter.get('/edit/:id', (req, res) => {
-    const todos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-    const todo = todos.find(t => t.id === parseInt(req.params.id));
-    res.render('todos/edit', { todo });
+todosRouter.get('/edit/:id', readData, async (req, res) => {
+    const { todos } = res.locals;
+    const todo = await todos.find(t => t.id === parseInt(req.params.id));
+    res.render('edit/edit', { todo });
 });
 
-todosRouter.post('/edit/:id', (req, res) => {
-    let todos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+todosRouter.post('/edit/:id', readData, async (req, res) => {
+    let { todos } = res.locals
     const id = parseInt(req.params.id);
     const updatedTodos = todos.map(todo => {
         if (todo.id === id) {
@@ -48,7 +45,7 @@ todosRouter.post('/edit/:id', (req, res) => {
         }
         return todo;
     });
-    fs.writeFileSync(dataPath, JSON.stringify(updatedTodos, null, 2));
+    await writeFile('db', 'tasks.json', updatedTodos);
     res.redirect('/');
 });
 

@@ -1,58 +1,89 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-a {
-    text-decoration: none;
-}
-
-ul,
-ol {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
+body {
+  font-family: "Poppins", sans-serif;
+  background: #066acd;
+  height: 100vh;
 }
 
 .container {
-    max-width: 1340px;
-    margin: auto;
+  max-width: 1340px;
+  margin: auto;
 }
 
-/* ***************************** */
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-    margin: 20px;
+.wrapper {
+  background: white;
+  border-radius: 10px;
+  width: 40%;
+  margin: 50px auto;
+  padding-bottom: 20px;
 }
 
-form {
-    margin-bottom: 10px;
+#newtask {
+  padding: 30px 20px;
+  border-radius: 10px;
 }
 
-input {
-    padding: 5px;
-    margin-right: 10px;
+#newtask input {
+  width: 70%;
+  height: 45px;
+  padding: 12px;
+  color: #111111;
+  font-weight: 500;
+  border-radius: 5px;
+  font-size: 15px;
+  border: 2px solid #d1d3d4;
 }
 
-button {
-    background-color: #5c67f2;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
+#newtask button {
+  font-weight: 500;
+  font-size: 15px;
+  background-color: #0d75ec;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  width: 20%;
+  height: 45px;
+  border-radius: 5px;
+  float: right;
+  margin-right: 5px;
 }
 
-button:hover {
-    background-color: #4a54e1;
+#tasks {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #c5e1e6;
+  border: 1px solid #939697;
+  border-radius: 5px;
+  padding: 5px 10px;
 }
 
+.taskName {
+  flex: 1;
+  word-break: break-word;
+}
+
+.edit,
+.delete {
+  background-color: #0a2ea4;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+}
